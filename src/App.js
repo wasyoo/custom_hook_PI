@@ -1,23 +1,42 @@
-import logo from './logo.svg';
 import './App.css';
+import useField from './Hooks/useField';
+
+const Input = ({ label, data }) => {
+  return (
+    <form>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">{label} :</label>
+        <input {...data} className="form-control" />
+      </div>
+    </form>
+  )
+}
+
 
 function App() {
+  const name = useField('text');
+  const born = useField('date');
+  const height = useField('number');
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form>
+        <Input label="name" data={name} />
+        <Input label="birthdate" data={born} />
+        <Input label="height" data={height} />
+
+        {
+          (name.value || born.value || height.value) && (
+            <pre>
+              <ul>
+                {name.value && <li>Name : {name.value}</li>}
+                {born.value && <li>Birthdate : {born.value}</li>}
+                {height.value && <li>Height : {height.value}</li>}
+              </ul>
+            </pre>
+          )
+        }
+      </form>
     </div>
   );
 }
